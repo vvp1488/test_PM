@@ -1,12 +1,11 @@
 from django.contrib import admin
-from .models import Category, Product, Catalog
-from mptt.admin import MPTTModelAdmin
+from .models import Category, ProductSpecification, Product, CartProduct
+from mptt.admin import MPTTModelAdmin, DraggableMPTTAdmin
 
 
-class CatalogAdmin(admin.ModelAdmin):
+admin.site.register(Category, DraggableMPTTAdmin)
 
-    list_display = ('group_item_name','slug')
+admin.site.register(ProductSpecification)
+admin.site.register(Product)
+admin.site.register(CartProduct, DraggableMPTTAdmin)
 
-admin.site.register(Catalog, CatalogAdmin)
-admin.site.register(Category)
-admin.site.register(Product, MPTTModelAdmin)

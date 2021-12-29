@@ -1,26 +1,15 @@
-from .serializers import CategorySerializer, ProductSerializer, OnePageResultSerializer
+from .serializers import OnePageResultSerializer
 
 from rest_framework import  generics
-from .models import Category, Product, Catalog
-
-
-class CategoryListAPIView(generics.ListAPIView):
-    queryset = Category.objects.filter()
-    serializer_class = CategorySerializer
-
-
-class ProductListAPIView(generics.ListAPIView):
-
-    serializer_class = ProductSerializer
-    lookup_field = 'pk'
-
-    def get_queryset(self):
-        queryset = Product.objects.root_nodes().filter(category=self.kwargs['pk'])
-        return queryset
+from .models import Category
 
 
 class OnePageResult(generics.ListAPIView):
 
     serializer_class = OnePageResultSerializer
-    queryset = Catalog.objects.all()
+
+    def get_queryset(self):
+        queryset = Category.objects.root_nodes().all()
+        return queryset
+
 
